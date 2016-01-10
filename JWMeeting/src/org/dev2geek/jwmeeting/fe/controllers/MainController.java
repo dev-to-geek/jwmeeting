@@ -17,6 +17,9 @@
 package org.dev2geek.jwmeeting.fe.controllers;
 
 
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+
 /**
  * Class: MainController
  *
@@ -24,4 +27,6 @@ package org.dev2geek.jwmeeting.fe.controllers;
  * @version 1
  */
 public class MainController {
+    @FXML
+    private Button closeButton;
 }
