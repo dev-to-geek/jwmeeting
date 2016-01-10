@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.dev2geek.jwmeeting.fe.controllers.MainController;
 
 /**
  * Class: Main
@@ -39,13 +40,19 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("views/main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/main.fxml"));
+
+        Parent root = fxmlLoader.load();
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setTitle("JWMeeting");
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        final MainController controller = fxmlLoader.getController();
+        controller.setStage(primaryStage);
+
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         primaryStage.setX(0);
         primaryStage.setY((primScreenBounds.getHeight() - primaryStage.getHeight()) / 4);

@@ -17,8 +17,11 @@
 package org.dev2geek.jwmeeting.fe.controllers;
 
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * Class: MainController
@@ -29,4 +32,30 @@ import javafx.scene.control.Button;
 public class MainController {
     @FXML
     private Button closeButton;
+
+    private Stage stage;
+    private double dragAnchorX;
+    private double dragAnchorY;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    @FXML
+    public void closeStage(ActionEvent actionEvent) {
+        stage.close();
+    }
+
+    @FXML
+    public void mousePressedHandler(MouseEvent me) {
+        dragAnchorX = me.getScreenX() - stage.getX();
+        dragAnchorY = me.getScreenY() - stage.getY();
+    }
+
+    @FXML
+    public void mouseDraggedHandler(MouseEvent me) {
+        //TODO add snap to corner
+        stage.setX(me.getScreenX() - dragAnchorX);
+        stage.setY(me.getScreenY() - dragAnchorY);
+    }
 }

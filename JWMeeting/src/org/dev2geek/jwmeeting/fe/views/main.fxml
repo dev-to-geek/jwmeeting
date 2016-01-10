@@ -21,12 +21,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <Group xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40"
-       fx:controller="org.dev2geek.jwmeeting.fe.controllers.MainController">
+       fx:controller="org.dev2geek.jwmeeting.fe.controllers.MainController"
+       onMouseDragged="#mouseDraggedHandler"
+       onMousePressed="#mousePressedHandler">
     <children>
         <Rectangle arcHeight="50.0" arcWidth="50.0" fill="SKYBLUE" height="350.0" strokeType="INSIDE" width="250.0"/>
         <VBox fx:id="contentBox" layoutX="30.0" layoutY="20.0" spacing="10.0">
             <children>
-                <Button fx:id="closeButton" mnemonicParsing="false" text="close"/>
+                <Button fx:id="closeButton" mnemonicParsing="false" text="close" onAction="#closeStage"/>
             </children>
         </VBox>
     </children>
