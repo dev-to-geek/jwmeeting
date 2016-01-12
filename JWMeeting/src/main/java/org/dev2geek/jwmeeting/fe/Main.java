@@ -40,7 +40,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/main.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/main.fxml"));
 
         Parent root = fxmlLoader.load();
         primaryStage.initStyle(StageStyle.TRANSPARENT);
