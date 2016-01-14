@@ -22,6 +22,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Class: MainController
@@ -30,6 +32,8 @@ import javafx.stage.Stage;
  * @version 1
  */
 public class MainController {
+    private static final Logger log = LogManager.getLogger(MainController.class);
+
     @FXML
     private Button closeButton;
 
@@ -55,7 +59,15 @@ public class MainController {
     @FXML
     public void mouseDraggedHandler(MouseEvent me) {
         //TODO add snap to corner
-        stage.setX(me.getScreenX() - dragAnchorX);
-        stage.setY(me.getScreenY() - dragAnchorY);
+
+        double stageX = me.getScreenX() - dragAnchorX;
+        if (stageX > 0) {
+            stage.setX(stageX);
+        }
+
+        double stageY = me.getScreenY() - dragAnchorY;
+        if (stageY > 0) {
+            stage.setY(stageY);
+        }
     }
 }

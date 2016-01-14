@@ -19,7 +19,7 @@ package org.dev2geek.jwmeeting.base.schedule.builder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.dev2geek.jwmeeting.base.schedule.MeetingChunk;
+import org.dev2geek.jwmeeting.base.schedule.chunks.MeetingChunk;
 import org.dev2geek.jwmeeting.base.schedule.MeetingSchedule;
 
 import java.time.LocalDate;
@@ -29,6 +29,8 @@ import java.util.LinkedHashSet;
 
 /**
  * Class: MeetingScheduleBuilder
+ * <p>
+ * With this you can instantiate your MeetingSchedule
  *
  * @author Mircha Emanuel `ryuujin` D'Angelo
  * @version 1
@@ -47,6 +49,12 @@ public final class MeetingScheduleBuilder {
         meetingChunks = new LinkedHashSet<>(10);
     }
 
+    /**
+     * Adds an assignement to this meeting. Order of inserting matters.
+     *
+     * @param meetingChunk the assignement
+     * @return MeetingScheduleBuilder instance
+     */
     public MeetingScheduleBuilder addMeetingChunk(MeetingChunk meetingChunk) {
         log.debug("addMeetingChunk({})", meetingChunk);
         if (meetingChunk != null) {
@@ -55,18 +63,36 @@ public final class MeetingScheduleBuilder {
         return this;
     }
 
+    /**
+     * sets the date of this meeting
+     *
+     * @param date the date of this meeting
+     * @return MeetingScheduleBuilder instance
+     */
     public MeetingScheduleBuilder setDate(LocalDate date) {
         log.debug("setDate({})", date);
         this.meetingDate = date;
         return this;
     }
 
+    /**
+     * sets the time of this meeting
+     *
+     * @param time the time of this meeting
+     * @return MeetingScheduleBuilder instance
+     */
     public MeetingScheduleBuilder setTime(LocalTime time) {
         log.debug("setTime({})", time);
         this.meetingTime = time;
         return this;
     }
 
+    /**
+     * sets the date and the time of this meeting
+     *
+     * @param dateTime the date and time
+     * @return MeetingScheduleBuilder instance
+     */
     public MeetingScheduleBuilder setDateTime(LocalDateTime dateTime) {
         log.debug("setDateTime({})", dateTime);
         if (dateTime != null) {
@@ -76,12 +102,28 @@ public final class MeetingScheduleBuilder {
         return this;
     }
 
+    /**
+     * It builds up the MeetingSchedule object. If any param insterted is not valid
+     * it throws an exception
+     *
+     * @return MeetingSchedule instance
+     * @throws MeetingScheduleBuilderStateException
+     */
     public MeetingSchedule create() throws MeetingScheduleBuilderStateException {
-        if (meetingDate == null || meetingTime == null || meetingChunks.isEmpty()) {
+        if (!isValid()) {
             throw new MeetingScheduleBuilderStateException(this);
         }
 
         return new MeetingSchedule(meetingDate, meetingTime, meetingChunks);
+    }
+
+    /**
+     * it tells you if this builder can create the instance of MeetingScheduler
+     *
+     * @return true if is in valid state, false otherwise
+     */
+    public boolean isValid() {
+        return !(meetingDate == null || meetingTime == null || meetingChunks.isEmpty());
     }
 
     boolean isDateNull() {

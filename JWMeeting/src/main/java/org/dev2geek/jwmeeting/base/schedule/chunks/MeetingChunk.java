@@ -14,21 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with JWMeeting.  If not, see <http://www.gnu.org/licenses/>.
  ******************************************************************************/
-package org.dev2geek.jwmeeting.base.schedule;
+package org.dev2geek.jwmeeting.base.schedule.chunks;
+
+import org.dev2geek.jwmeeting.base.schedule.MeetingSchedule;
 
 /**
  * Class: MeetingChunk
  *
  * @author Mircha Emanuel `ryuujin` D'Angelo
  * @version 1
+ * @see MeetingSchedule
  */
 public abstract class MeetingChunk {
     private boolean executed;
 
+    /**
+     * @return true if this assignement has concluded
+     */
     public boolean isExecuted() {
         return executed;
     }
 
+    /**
+     * @param executed indicates if this assignement has concluded
+     */
     public void setExecuted(boolean executed) {
         this.executed = executed;
     }

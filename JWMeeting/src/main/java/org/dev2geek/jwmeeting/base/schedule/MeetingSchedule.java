@@ -18,6 +18,7 @@ package org.dev2geek.jwmeeting.base.schedule;
 
 import com.google.common.collect.ImmutableSet;
 import org.dev2geek.jwmeeting.base.schedule.builder.MeetingScheduleBuilder;
+import org.dev2geek.jwmeeting.base.schedule.chunks.MeetingChunk;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -51,14 +52,23 @@ public class MeetingSchedule {
         this.meetingChunks = meetingChunks;
     }
 
+    /**
+     * @return the date of this meeting
+     */
     public LocalDate getDate() {
         return date;
     }
 
+    /**
+     * @return the time of this meeting
+     */
     public LocalTime getStartTime() {
         return startTime;
     }
 
+    /**
+     * @return an immutable copy of the set of chunkes with their inserting order preserved
+     */
     public ImmutableSet<MeetingChunk> getMeetingChunks() {
         return ImmutableSet.copyOf(meetingChunks);
     }

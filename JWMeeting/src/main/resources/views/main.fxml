@@ -16,19 +16,32 @@
       You should have received a copy of the GNU General Public License
       along with JWMeeting.  If not, see <http://www.gnu.org/licenses/>.
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
-<Group xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40"
-       fx:controller="org.dev2geek.jwmeeting.fe.controllers.MainController"
-       onMouseDragged="#mouseDraggedHandler"
-       onMousePressed="#mousePressedHandler">
+
+<Group xmlns:fx="http://javafx.com/fxml/1" onMouseDragged="#mouseDraggedHandler" onMousePressed="#mousePressedHandler"
+       xmlns="http://javafx.com/javafx/8.0.40" fx:controller="org.dev2geek.jwmeeting.fe.controllers.MainController">
     <children>
-        <Rectangle arcHeight="50.0" arcWidth="50.0" fill="SKYBLUE" height="350.0" strokeType="INSIDE" width="250.0"/>
-        <VBox fx:id="contentBox" layoutX="30.0" layoutY="20.0" spacing="10.0">
+        <Rectangle arcHeight="60.0" arcWidth="60.0" fill="#a4e8e5" height="390.0" strokeLineCap="ROUND"
+                   strokeType="INSIDE" width="290.0">
+            <effect>
+                <Shadow color="#00000071" height="40.0" radius="19.5" width="40.0"/>
+            </effect>
+        </Rectangle>
+        <Rectangle arcHeight="50.0" arcWidth="50.0" fill="SKYBLUE" height="350.0" layoutX="20.0" layoutY="20.0"
+                   strokeType="INSIDE" width="250.0"/>
+        <VBox fx:id="contentBox" layoutX="50.0" layoutY="50.0" spacing="10.0">
             <children>
-                <Button fx:id="closeButton" mnemonicParsing="false" text="close" onAction="#closeStage"/>
+                <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeStage" text="close"/>
             </children>
         </VBox>
     </children>
