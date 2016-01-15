@@ -16,11 +16,9 @@
  ******************************************************************************/
 package org.dev2geek.jwmeeting.base.schedule.chunks;
 
-import com.google.common.base.MoreObjects;
 import org.dev2geek.jwmeeting.base.schedule.MeetingSchedule;
 
 import java.io.Serializable;
-import java.time.Duration;
 
 /**
  * Class: MeetingChunk
@@ -52,6 +50,7 @@ public abstract class MeetingChunk implements Serializable {
                 "executed=" + executed +
                 '}';
     }
+
 }
 
     

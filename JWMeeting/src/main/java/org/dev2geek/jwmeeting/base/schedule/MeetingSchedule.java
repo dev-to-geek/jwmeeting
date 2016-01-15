@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 
 /**
  * Class: MeetingSchedule
@@ -42,10 +43,22 @@ public class MeetingSchedule implements Serializable {
 
 
     private static final long serialVersionUID = -3290233650081701074L;
-    private final LocalDate date;
-    private final LocalTime startTime;
-    private final LinkedHashSet<MeetingChunk> meetingChunks;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LinkedHashSet<MeetingChunk> meetingChunks;
 
+    /**
+     *
+     */
+    public MeetingSchedule() {
+        meetingChunks = new LinkedHashSet<>();
+    }
+
+    /**
+     * @param date          the date of the meeting
+     * @param startTime     the time of the meeting
+     * @param meetingChunks the list of assignement
+     */
     public MeetingSchedule(LocalDate date, LocalTime startTime, LinkedHashSet<MeetingChunk> meetingChunks) {
         Preconditions.checkNotNull(date, "date cannot be null");
         Preconditions.checkNotNull(startTime, "startTime cannot be null");
@@ -57,6 +70,10 @@ public class MeetingSchedule implements Serializable {
         this.meetingChunks = meetingChunks;
     }
 
+    /**
+     * @param startTime     the date and time of the meeting
+     * @param meetingChunks the list of the assignement
+     */
     public MeetingSchedule(LocalDateTime startTime, LinkedHashSet<MeetingChunk> meetingChunks) {
         Preconditions.checkNotNull(startTime, "startTime cannot be null");
         Preconditions.checkNotNull(meetingChunks, "meetingChunks cannot be null");
@@ -73,6 +90,11 @@ public class MeetingSchedule implements Serializable {
         return date;
     }
 
+    public void setDate(LocalDate date) {
+        Preconditions.checkNotNull(date, "date cannot be null");
+        this.date = date;
+    }
+
     /**
      * @return the time of this meeting
      */
@@ -80,11 +102,26 @@ public class MeetingSchedule implements Serializable {
         return startTime;
     }
 
+    public void setStartTime(LocalTime startTime) {
+        Preconditions.checkNotNull(startTime, "startTime cannto be null");
+        this.startTime = startTime;
+    }
+
     /**
      * @return an immutable copy of the set of chunkes with their inserting order preserved
      */
     public ImmutableSet<MeetingChunk> getMeetingChunks() {
         return ImmutableSet.copyOf(meetingChunks);
+    }
+
+    public void setMeetingChunks(LinkedHashSet<MeetingChunk> meetingChunks) {
+        Preconditions.checkNotNull(meetingChunks, "meetingChunks cannot be null");
+        this.meetingChunks = meetingChunks;
+    }
+
+    public void addMeetingChunks(MeetingChunk meetingChunk) {
+        Preconditions.checkNotNull(meetingChunk, "meetingChunk cannot be null");
+        meetingChunks.add(meetingChunk);
     }
 
     @Override
@@ -100,21 +137,15 @@ public class MeetingSchedule implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         MeetingSchedule that = (MeetingSchedule) o;
-
-        if (!date.equals(that.date)) return false;
-        if (!startTime.equals(that.startTime)) return false;
-        return meetingChunks.equals(that.meetingChunks);
-
+        return Objects.equals(date, that.date) &&
+                Objects.equals(startTime, that.startTime) &&
+                Objects.equals(meetingChunks, that.meetingChunks);
     }
 
     @Override
     public int hashCode() {
-        int result = date.hashCode();
-        result = 31 * result + startTime.hashCode();
-        result = 31 * result + meetingChunks.hashCode();
-        return result;
+        return Objects.hash(date, startTime, meetingChunks);
     }
 }
 
