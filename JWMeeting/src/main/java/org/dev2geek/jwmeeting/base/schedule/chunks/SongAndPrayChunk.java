@@ -16,40 +16,50 @@
  ******************************************************************************/
 package org.dev2geek.jwmeeting.base.schedule.chunks;
 
-import com.google.common.base.Preconditions;
-
 /**
- * Class: SongChunk
+ * Class: SongAndPrayChunk
  *
  * @author Mircha Emanuel `ryuujin` D'Angelo
  * @version 1
  */
-public class SongChunk extends MeetingChunk {
-    private static final long serialVersionUID = 2010711722935308130L;
-    private final int number;
-    private final String theme;
+public class SongAndPrayChunk extends SongChunk {
 
-    public SongChunk(int number, String theme) {
-        Preconditions.checkArgument(number > 0, "number might be greater than 0");
-        this.number = number;
-        this.theme = theme != null ? theme : "";
+    private static final long serialVersionUID = -7276872307232398241L;
+    private final String prayerBrother; //TODO could be a class referenced by a list of brothres? maybe next version
+
+    public SongAndPrayChunk(int number, String theme, String prayerBrother) {
+        super(number, theme);
+        this.prayerBrother = prayerBrother != null ? prayerBrother : "";
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    public String getTheme() {
-        return theme;
+    public String getPrayerBrother() {
+        return prayerBrother;
     }
 
     @Override
     public String toString() {
-        return "SongChunk{" +
-                "number=" + number +
-                ", theme='" + theme + '\'' +
+        return "SongAndPrayChunk{" +
+                "number=" + getNumber() +
+                ", theme='" + getTheme() + '\'' +
                 ", executed='" + isExecuted() + '\'' +
+                "prayerBrother='" + prayerBrother + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SongAndPrayChunk that = (SongAndPrayChunk) o;
+
+        return prayerBrother.equals(that.prayerBrother);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return prayerBrother.hashCode();
     }
 }
 

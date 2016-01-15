@@ -16,42 +16,23 @@
  ******************************************************************************/
 package org.dev2geek.jwmeeting.base.schedule.chunks;
 
-import com.google.common.base.MoreObjects;
-import org.dev2geek.jwmeeting.base.schedule.MeetingSchedule;
-
-import java.io.Serializable;
-import java.time.Duration;
-
 /**
- * Class: MeetingChunk
+ * Class: WatchtowerChunk
  *
  * @author Mircha Emanuel `ryuujin` D'Angelo
  * @version 1
- * @see MeetingSchedule
  */
-public abstract class MeetingChunk implements Serializable {
-    private boolean executed;
+public class WatchtowerChunk extends MeetingChunkWithDuration {
+    private static final long serialVersionUID = -1695950115575695094L;
 
-    /**
-     * @return true if this assignement has concluded
-     */
-    public boolean isExecuted() {
-        return executed;
+    public WatchtowerChunk() {
+        super(60);
     }
 
-    /**
-     * @param executed indicates if this assignement has concluded
-     */
-    public void setExecuted(boolean executed) {
-        this.executed = executed;
+    public WatchtowerChunk(int minutes) {
+        super(minutes);
     }
 
-    @Override
-    public String toString() {
-        return "MeetingChunk{" +
-                "executed=" + executed +
-                '}';
-    }
 }
 
     

@@ -16,10 +16,13 @@
  ******************************************************************************/
 package org.dev2geek.jwmeeting.base.schedule;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import org.dev2geek.jwmeeting.base.schedule.builder.MeetingScheduleBuilder;
 import org.dev2geek.jwmeeting.base.schedule.chunks.MeetingChunk;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -35,18 +38,29 @@ import java.util.LinkedHashSet;
  * @see MeetingChunk
  * @see MeetingScheduleBuilder
  */
-public class MeetingSchedule {
+public class MeetingSchedule implements Serializable {
+
+
+    private static final long serialVersionUID = -3290233650081701074L;
     private final LocalDate date;
     private final LocalTime startTime;
     private final LinkedHashSet<MeetingChunk> meetingChunks;
 
     public MeetingSchedule(LocalDate date, LocalTime startTime, LinkedHashSet<MeetingChunk> meetingChunks) {
+        Preconditions.checkNotNull(date, "date cannot be null");
+        Preconditions.checkNotNull(startTime, "startTime cannot be null");
+        Preconditions.checkNotNull(meetingChunks, "meetingChunks cannot be null");
+        Preconditions.checkArgument(meetingChunks.size() > 0, "meetingChunks cannot be empty");
+
         this.date = date;
         this.startTime = startTime;
         this.meetingChunks = meetingChunks;
     }
 
     public MeetingSchedule(LocalDateTime startTime, LinkedHashSet<MeetingChunk> meetingChunks) {
+        Preconditions.checkNotNull(startTime, "startTime cannot be null");
+        Preconditions.checkNotNull(meetingChunks, "meetingChunks cannot be null");
+        Preconditions.checkArgument(meetingChunks.size() > 0, "meetingChunks cannot be empty");
         this.date = startTime.toLocalDate();
         this.startTime = startTime.toLocalTime();
         this.meetingChunks = meetingChunks;
@@ -71,6 +85,36 @@ public class MeetingSchedule {
      */
     public ImmutableSet<MeetingChunk> getMeetingChunks() {
         return ImmutableSet.copyOf(meetingChunks);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("date", date)
+                .add("startTime", startTime)
+                .add("meetingChunks", meetingChunks)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MeetingSchedule that = (MeetingSchedule) o;
+
+        if (!date.equals(that.date)) return false;
+        if (!startTime.equals(that.startTime)) return false;
+        return meetingChunks.equals(that.meetingChunks);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = date.hashCode();
+        result = 31 * result + startTime.hashCode();
+        result = 31 * result + meetingChunks.hashCode();
+        return result;
     }
 }
 
