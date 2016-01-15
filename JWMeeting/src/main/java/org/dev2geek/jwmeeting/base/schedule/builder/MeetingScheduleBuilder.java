@@ -19,13 +19,14 @@ package org.dev2geek.jwmeeting.base.schedule.builder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.dev2geek.jwmeeting.base.schedule.chunks.MeetingChunk;
 import org.dev2geek.jwmeeting.base.schedule.MeetingSchedule;
+import org.dev2geek.jwmeeting.base.schedule.chunks.MeetingChunk;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 
 /**
  * Class: MeetingScheduleBuilder
@@ -115,6 +116,23 @@ public final class MeetingScheduleBuilder {
         }
 
         return new MeetingSchedule(meetingDate, meetingTime, meetingChunks);
+    }
+
+    /**
+     * It builds up the MeetingSchedule object without throwing an exception.
+     *
+     * @return Optional&lt;MeetingSchedule&gt;
+     */
+    public Optional<MeetingSchedule> createOptional() {
+        Optional<MeetingSchedule> optional;
+
+        if (isValid()) {
+            optional = Optional.of(new MeetingSchedule(meetingDate, meetingTime, meetingChunks));
+        } else {
+            optional = Optional.empty();
+        }
+
+        return optional;
     }
 
     /**
