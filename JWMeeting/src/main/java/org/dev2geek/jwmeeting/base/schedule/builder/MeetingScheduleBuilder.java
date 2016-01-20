@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.LinkedHashSet;
 import java.util.Optional;
+import java.util.Vector;
 
 /**
  * Class: MeetingScheduleBuilder
@@ -43,11 +44,12 @@ public final class MeetingScheduleBuilder {
     private LocalDate meetingDate;
     private LocalTime meetingTime;
     private String meetingName;
-    private LinkedHashSet<MeetingChunk> meetingChunks;
+    //    private LinkedHashSet<MeetingChunk> meetingChunks;
+    private Vector<MeetingChunk> meetingChunks;
 
     public MeetingScheduleBuilder() {
         log.debug("MeetingScheduleBuilder init");
-        meetingChunks = new LinkedHashSet<>(10);
+        meetingChunks = new Vector<>(10, 4);
     }
 
     /**

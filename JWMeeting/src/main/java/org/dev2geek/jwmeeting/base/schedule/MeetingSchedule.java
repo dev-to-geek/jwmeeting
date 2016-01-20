@@ -18,7 +18,6 @@ package org.dev2geek.jwmeeting.base.schedule;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import org.dev2geek.jwmeeting.base.schedule.builder.MeetingScheduleBuilder;
 import org.dev2geek.jwmeeting.base.schedule.chunks.MeetingChunk;
 
@@ -26,8 +25,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.LinkedHashSet;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Vector;
 
 /**
  * Class: MeetingSchedule
@@ -45,13 +45,13 @@ public class MeetingSchedule implements Serializable {
     private static final long serialVersionUID = -3290233650081701074L;
     private LocalDate date;
     private LocalTime startTime;
-    private LinkedHashSet<MeetingChunk> meetingChunks;
+    private Vector<MeetingChunk> meetingChunks;
 
     /**
      *
      */
     public MeetingSchedule() {
-        meetingChunks = new LinkedHashSet<>();
+        meetingChunks = new Vector<>(10, 4);
     }
 
     /**
@@ -59,7 +59,7 @@ public class MeetingSchedule implements Serializable {
      * @param startTime     the time of the meeting
      * @param meetingChunks the list of assignement
      */
-    public MeetingSchedule(LocalDate date, LocalTime startTime, LinkedHashSet<MeetingChunk> meetingChunks) {
+    public MeetingSchedule(LocalDate date, LocalTime startTime, Vector<MeetingChunk> meetingChunks) {
         Preconditions.checkNotNull(date, "date cannot be null");
         Preconditions.checkNotNull(startTime, "startTime cannot be null");
         Preconditions.checkNotNull(meetingChunks, "meetingChunks cannot be null");
@@ -74,7 +74,7 @@ public class MeetingSchedule implements Serializable {
      * @param startTime     the date and time of the meeting
      * @param meetingChunks the list of the assignement
      */
-    public MeetingSchedule(LocalDateTime startTime, LinkedHashSet<MeetingChunk> meetingChunks) {
+    public MeetingSchedule(LocalDateTime startTime, Vector<MeetingChunk> meetingChunks) {
         Preconditions.checkNotNull(startTime, "startTime cannot be null");
         Preconditions.checkNotNull(meetingChunks, "meetingChunks cannot be null");
         Preconditions.checkArgument(meetingChunks.size() > 0, "meetingChunks cannot be empty");
@@ -82,6 +82,20 @@ public class MeetingSchedule implements Serializable {
         this.startTime = startTime.toLocalTime();
         this.meetingChunks = meetingChunks;
     }
+
+    /**
+     * @param startTime     the date and time of the meeting
+     * @param meetingChunks the list of the assignement
+     */
+    public MeetingSchedule(LocalDateTime startTime, MeetingChunk... meetingChunks) {
+        Preconditions.checkNotNull(startTime, "startTime cannot be null");
+        Preconditions.checkNotNull(meetingChunks, "meetingChunks cannot be null");
+        Preconditions.checkArgument(meetingChunks.length > 0, "meetingChunks cannot be empty");
+        this.date = startTime.toLocalDate();
+        this.startTime = startTime.toLocalTime();
+        Collections.addAll(this.meetingChunks, meetingChunks);
+    }
+
 
     /**
      * @return the date of this meeting
@@ -107,14 +121,11 @@ public class MeetingSchedule implements Serializable {
         this.startTime = startTime;
     }
 
-    /**
-     * @return an immutable copy of the set of chunkes with their inserting order preserved
-     */
-    public ImmutableSet<MeetingChunk> getMeetingChunks() {
-        return ImmutableSet.copyOf(meetingChunks);
+    public Vector<MeetingChunk> getMeetingChunks() {
+        return meetingChunks;
     }
 
-    public void setMeetingChunks(LinkedHashSet<MeetingChunk> meetingChunks) {
+    public void setMeetingChunks(Vector<MeetingChunk> meetingChunks) {
         Preconditions.checkNotNull(meetingChunks, "meetingChunks cannot be null");
         this.meetingChunks = meetingChunks;
     }
@@ -122,6 +133,12 @@ public class MeetingSchedule implements Serializable {
     public void addMeetingChunks(MeetingChunk meetingChunk) {
         Preconditions.checkNotNull(meetingChunk, "meetingChunk cannot be null");
         meetingChunks.add(meetingChunk);
+    }
+
+    public void addMeetingChunks(MeetingChunk... meetingChunks) {
+        Preconditions.checkNotNull(meetingChunks, "meetingChunks cannot be null");
+        Preconditions.checkArgument(meetingChunks.length > 0, "meetingChunks cannot be empty");
+        Collections.addAll(this.meetingChunks, meetingChunks);
     }
 
     @Override
